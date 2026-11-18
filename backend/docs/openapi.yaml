@@ -1,0 +1,10 @@
+openapi: 3.0.3
+info:
+  title: Sistema Auth Starter API
+  version: 0.1.0
+paths:
+  /health:
+    get:
+      summary: Estado de la API
+      responses:
+        '200': { description: OK }

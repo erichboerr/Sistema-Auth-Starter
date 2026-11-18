@@ -1,0 +1,73 @@
+{
+  "name": "sistema-auth-starter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "API modular de autenticacion profesional con Node.js, TypeScript, Express, PostgreSQL y Sequelize",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write .",
+    "db:migrate": "sequelize-cli db:migrate",
+    "db:migrate:undo": "sequelize-cli db:migrate:undo",
+    "db:seed": "sequelize-cli db:seed:all",
+    "admin:create": "tsx src/scripts/create-admin.ts",
+    "test": "vitest run",
+    "test:db:migrate": "cross-env NODE_ENV=test sequelize-cli db:migrate",
+    "test:integration": "cross-env NODE_ENV=test vitest run"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv-flow": "^4.1.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.7.4",
+    "helmet": "^8.1.0",
+    "ioredis": "^6.0.0",
+    "joi": "^18.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "otplib": "^13.6.0",
+    "pg": "^8.16.3",
+    "rate-limit-redis": "^6.0.2",
+    "sequelize": "^6.37.8",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^11.1.1",
+    "validator": "^13.15.35",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.9",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.0.0",
+    "@types/supertest": "^7.2.1",
+    "@types/swagger-ui-express": "^4.1.8",
+    "cross-env": "^10.1.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.6.0",
+    "sequelize-cli": "^6.6.5",
+    "supertest": "^7.3.2",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^5.1.0"
+  },
+  "overrides": {
+    "uuid": "^11.1.1",
+    "glob": "^14.0.2",
+    "minimatch": "^11.0.1"
+  },
+  "allowScripts": {
+    "bcrypt@6.0.0": true,
+    "esbuild@0.28.2": true
+  }
+}

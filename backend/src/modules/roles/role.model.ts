@@ -9,10 +9,17 @@ export class Role extends Model {
 }
 
 export const initRoleModel = (sequelize: Sequelize): typeof Role => {
-  Role.init({
-    id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
-    name: { type: DataTypes.STRING(80), allowNull: false, unique: true },
-    description: { type: DataTypes.STRING(255), allowNull: true },
-  }, { sequelize, tableName: "roles", timestamps: true });
+  Role.init(
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      name: { type: DataTypes.STRING(80), allowNull: false, unique: true },
+      description: { type: DataTypes.STRING(255), allowNull: true },
+    },
+    { sequelize, tableName: "roles", timestamps: true },
+  );
   return Role;
 };

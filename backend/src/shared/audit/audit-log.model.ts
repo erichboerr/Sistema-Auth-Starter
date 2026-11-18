@@ -12,14 +12,25 @@ export class AuditLog extends Model {
 }
 
 export const initAuditLogModel = (sequelize: Sequelize): typeof AuditLog => {
-  AuditLog.init({
-    id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
-    userId: { type: DataTypes.UUID, allowNull: true },
-    event: { type: DataTypes.STRING(80), allowNull: false },
-    success: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
-    ipAddress: { type: DataTypes.STRING(64), allowNull: true },
-    userAgent: { type: DataTypes.STRING(512), allowNull: true },
-    metadata: { type: DataTypes.JSONB, allowNull: true },
-  }, { sequelize, tableName: "audit_logs", timestamps: true, updatedAt: false });
+  AuditLog.init(
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      userId: { type: DataTypes.UUID, allowNull: true },
+      event: { type: DataTypes.STRING(80), allowNull: false },
+      success: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
+      ipAddress: { type: DataTypes.STRING(64), allowNull: true },
+      userAgent: { type: DataTypes.STRING(512), allowNull: true },
+      metadata: { type: DataTypes.JSONB, allowNull: true },
+    },
+    { sequelize, tableName: "audit_logs", timestamps: true, updatedAt: false },
+  );
   return AuditLog;
 };

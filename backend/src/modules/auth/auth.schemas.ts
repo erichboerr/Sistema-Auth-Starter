@@ -8,5 +8,9 @@ export const loginSchema = Joi.object({
 export const refreshSchema = Joi.object({}).unknown(false);
 export const changePasswordSchema = Joi.object({
   currentPassword: Joi.string().min(8).max(128).required(),
-  newPassword: Joi.string().min(12).max(128).required().invalid(Joi.ref("currentPassword")),
+  newPassword: Joi.string()
+    .min(12)
+    .max(128)
+    .required()
+    .invalid(Joi.ref("currentPassword")),
 }).unknown(false);

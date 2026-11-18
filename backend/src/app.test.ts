@@ -6,7 +6,10 @@ describe("HTTP base de la aplicación", () => {
   it("expone el health check", async () => {
     const response = await request(app).get("/health");
     expect(response.status).toBe(200);
-    expect(response.body).toEqual({ status: "ok", service: "sistema-auth-starter" });
+    expect(response.body).toEqual({
+      status: "ok",
+      service: "sistema-auth-starter",
+    });
   });
 
   it("responde un error JSON consistente para rutas inexistentes", async () => {

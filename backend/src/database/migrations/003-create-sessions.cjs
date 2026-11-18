@@ -4,7 +4,12 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     // Se almacena el hash, nunca el refresh token en texto plano.
     await queryInterface.createTable("sessions", {
-      id: { type: Sequelize.UUID, defaultValue: Sequelize.UUIDV4, allowNull: false, primaryKey: true },
+      id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false,
+        primaryKey: true,
+      },
       userId: {
         type: Sequelize.UUID,
         allowNull: false,
@@ -23,8 +28,13 @@ module.exports = {
       updatedAt: { type: Sequelize.DATE, allowNull: false },
     });
 
-    await queryInterface.addIndex("sessions", ["userId"], { name: "sessions_user_id_idx" });
-    await queryInterface.addIndex("sessions", ["refreshTokenHash"], { name: "sessions_refresh_token_hash_idx", unique: true });
+    await queryInterface.addIndex("sessions", ["userId"], {
+      name: "sessions_user_id_idx",
+    });
+    await queryInterface.addIndex("sessions", ["refreshTokenHash"], {
+      name: "sessions_refresh_token_hash_idx",
+      unique: true,
+    });
   },
 
   async down(queryInterface) {

@@ -7,9 +7,11 @@ import { AppError } from "../errors/app-error.js";
 export const requireCsrfHeader: RequestHandler = (req, _res, next) => {
   const cookieToken = req.cookies.csrf_token as string | undefined;
   const headerToken = req.get("x-csrf-token");
-  if (!cookieToken || !headerToken) return next(new AppError(403, "Token CSRF requerido", "CSRF_REQUIRED"));
+  if (!cookieToken || !headerToken)
+    return next(new AppError(403, "Token CSRF requerido", "CSRF_REQUIRED"));
   const cookieDigest = createHash("sha256").update(cookieToken).digest();
   const headerDigest = createHash("sha256").update(headerToken).digest();
-  if (!timingSafeEqual(cookieDigest, headerDigest)) return next(new AppError(403, "Token CSRF inválido", "CSRF_INVALID"));
+  if (!timingSafeEqual(cookieDigest, headerDigest))
+    return next(new AppError(403, "Token CSRF inválido", "CSRF_INVALID"));
   next();
 };

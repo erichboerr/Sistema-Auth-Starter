@@ -17,16 +17,27 @@ export class Session extends Model {
 }
 
 export const initSessionModel = (sequelize: Sequelize): typeof Session => {
-  Session.init({
-    id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
-    userId: { type: DataTypes.UUID, allowNull: false },
-    refreshTokenHash: { type: DataTypes.STRING(128), allowNull: false, unique: true },
-    previousTokenHash: { type: DataTypes.STRING(128), allowNull: true },
-    expiresAt: { type: DataTypes.DATE, allowNull: false },
-    lastUsedAt: { type: DataTypes.DATE, allowNull: true },
-    revokedAt: { type: DataTypes.DATE, allowNull: true },
-    userAgent: { type: DataTypes.STRING(512), allowNull: true },
-    ipAddress: { type: DataTypes.STRING(64), allowNull: true },
-  }, { sequelize, tableName: "sessions", timestamps: true });
+  Session.init(
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      userId: { type: DataTypes.UUID, allowNull: false },
+      refreshTokenHash: {
+        type: DataTypes.STRING(128),
+        allowNull: false,
+        unique: true,
+      },
+      previousTokenHash: { type: DataTypes.STRING(128), allowNull: true },
+      expiresAt: { type: DataTypes.DATE, allowNull: false },
+      lastUsedAt: { type: DataTypes.DATE, allowNull: true },
+      revokedAt: { type: DataTypes.DATE, allowNull: true },
+      userAgent: { type: DataTypes.STRING(512), allowNull: true },
+      ipAddress: { type: DataTypes.STRING(64), allowNull: true },
+    },
+    { sequelize, tableName: "sessions", timestamps: true },
+  );
   return Session;
 };

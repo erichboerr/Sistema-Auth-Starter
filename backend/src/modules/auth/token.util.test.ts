@@ -1,9 +1,19 @@
 import { describe, expect, it } from "vitest";
-import { createAccessToken, createRefreshToken, hashRefreshToken, verifyAccessToken } from "./token.util.js";
+import {
+  createAccessToken,
+  createRefreshToken,
+  hashRefreshToken,
+  verifyAccessToken,
+} from "./token.util.js";
 
 describe("Utilidades de tokens", () => {
   it("crea y verifica un access token con el payload esperado", () => {
-    const token = createAccessToken({ sub: "user-id", sid: "session-id", role: "admin", type: "access" });
+    const token = createAccessToken({
+      sub: "user-id",
+      sid: "session-id",
+      role: "admin",
+      type: "access",
+    });
     const payload = verifyAccessToken(token);
 
     expect(payload.sub).toBe("user-id");
@@ -13,7 +23,12 @@ describe("Utilidades de tokens", () => {
   });
 
   it("rechaza un token alterado", () => {
-    const token = createAccessToken({ sub: "user-id", sid: "session-id", role: "admin", type: "access" });
+    const token = createAccessToken({
+      sub: "user-id",
+      sid: "session-id",
+      role: "admin",
+      type: "access",
+    });
     expect(() => verifyAccessToken(`${token}alterado`)).toThrow();
   });
 

@@ -6,9 +6,13 @@ import { Role, User } from "../database/models.js";
 
 // Este comando es deliberadamente local: el primer administrador no se crea
 // mediante una ruta HTTP pública ni con credenciales conocidas en un seeder.
-const askHidden = async (rl: readline.Interface, question: string): Promise<string> => {
+const askHidden = async (
+  rl: readline.Interface,
+  question: string,
+): Promise<string> => {
   const terminal = process.stdin;
-  if (!terminal.isTTY || typeof terminal.setRawMode !== "function") return rl.question(`${question} `);
+  if (!terminal.isTTY || typeof terminal.setRawMode !== "function")
+    return rl.question(`${question} `);
 
   output.write(question);
   terminal.setRawMode(true);
@@ -35,17 +39,28 @@ const askHidden = async (rl: readline.Interface, question: string): Promise<stri
 const main = async (): Promise<void> => {
   const rl = readline.createInterface({ input, output });
   try {
-    const email = (await rl.question("Email del administrador: ")).trim().toLowerCase();
+    const email = (await rl.question("Email del administrador: "))
+      .trim()
+      .toLowerCase();
     const password = await askHidden(rl, "Contraseña (mínimo 12 caracteres): ");
     const confirmation = await askHidden(rl, "Repetir contraseña: ");
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("El email no es válido");
-    if (password.length < 12) throw new Error("La contraseña debe tener al menos 12 caracteres");
-    if (password !== confirmation) throw new Error("Las contraseñas no coinciden");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      throw new Error("El email no es válido");
+    if (password.length < 12)
+      throw new Error("La contraseña debe tener al menos 12 caracteres");
+    if (password !== confirmation)
+      throw new Error("Las contraseñas no coinciden");
 
     await sequelize.authenticate();
-    const [role] = await Role.findOrCreate({ where: { name: "admin" }, defaults: { description: "Administrador del sistema" } });
-    const existingUser = await User.findOne({ where: { email }, paranoid: false });
+    const [role] = await Role.findOrCreate({
+      where: { name: "admin" },
+      defaults: { description: "Administrador del sistema" },
+    });
+    const existingUser = await User.findOne({
+      where: { email },
+      paranoid: false,
+    });
     if (existingUser) throw new Error("Ya existe un usuario con ese email");
 
     const passwordHash = await bcrypt.hash(password, 12);
@@ -58,6 +73,10 @@ const main = async (): Promise<void> => {
 };
 
 main().catch((error: unknown) => {
-  console.error(error instanceof Error ? error.message : "No se pudo crear el administrador");
+  console.error(
+    error instanceof Error
+      ? error.message
+      : "No se pudo crear el administrador",
+  );
   process.exitCode = 1;
 });

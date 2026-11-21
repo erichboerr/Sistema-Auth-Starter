@@ -24,6 +24,8 @@ npm run dev
 
 Swagger: `http://localhost:3000/api/docs`
 
+Guía completa de despliegue en Ubuntu Server: [docs/PRODUCTION-DEPLOYMENT-GUIDE.md](./docs/PRODUCTION-DEPLOYMENT-GUIDE.md)
+
 Generar `MFA_ENCRYPTION_KEY`:
 
 ```powershell

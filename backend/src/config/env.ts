@@ -22,6 +22,7 @@ const schema = Joi.object({
   LOG_LEVEL: Joi.string().default("info"),
   REDIS_URL: Joi.string()
     .uri({ scheme: ["redis", "rediss"] })
+    .empty("")
     .optional(),
   MFA_ENCRYPTION_KEY: Joi.string().hex().length(64).required(),
 }).unknown(false);

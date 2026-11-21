@@ -72,14 +72,13 @@ export const login = async (
     throw new AppError(401, "Credenciales inválidas", "INVALID_CREDENTIALS");
   }
   if (user.mfaEnabled) {
-    if (
-      !input.mfaCode ||
-      !user.mfaSecretEncrypted ||
-      !(await verify({
-        token: input.mfaCode,
-        secret: decryptMfaSecret(user.mfaSecretEncrypted),
-      }))
-    )
+    let mfaValid = Boolean(input.mfaCode && user.mfaSecretEncrypted && await verify({ token: input.mfaCode, secret: decryptMfaSecret(user.mfaSecretEncrypted) }));
+    if (!mfaValid && input.recoveryCode) {
+      const hashes = [...(user.mfaRecoveryCodesHash ?? [])];
+      const index = await Promise.all(hashes.map((hash) => bcrypt.compare(input.recoveryCode!, hash))).then((matches) => matches.findIndex(Boolean));
+      if (index >= 0) { hashes.splice(index, 1); await user.update({ mfaRecoveryCodesHash: hashes }); mfaValid = true; }
+    }
+    if (!mfaValid)
       throw new AppError(
         401,
         "Código MFA requerido o inválido",

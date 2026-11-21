@@ -13,4 +13,5 @@ export interface LoginInput {
   email: string;
   password: string;
   mfaCode?: string;
+  recoveryCode?: string;
 }

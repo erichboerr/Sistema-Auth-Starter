@@ -25,7 +25,7 @@ describe.skipIf(!enabled)("ABM de usuarios", () => {
     });
     const permissions = await Permission.findAll({
       where: {
-        name: ["users:read", "users:create", "users:update", "users:delete"],
+        name: ["users:read", "users:create", "users:update", "users:delete", "audit:read"],
       },
     });
     await (
@@ -102,5 +102,12 @@ describe.skipIf(!enabled)("ABM de usuarios", () => {
       .set("Authorization", `Bearer ${adminToken}`);
     expect(response.status).toBe(400);
     expect(response.body.error.code).toBe("SELF_DELETE_NOT_ALLOWED");
+  });
+
+  it("permite consultar auditoría con filtros", async () => {
+    const response = await request(app).get("/api/audit?event=login").set("Authorization", `Bearer ${adminToken}`);
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("items");
+    expect(response.body.items.every((item: { event: string }) => item.event === "login")).toBe(true);
   });
 });

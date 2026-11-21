@@ -3,6 +3,9 @@ export const loginSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().min(8).max(128).required(),
   mfaCode: Joi.string().length(6).pattern(/^\d+$/).optional(),
+  recoveryCode: Joi.string()
+    .pattern(/^[A-Z0-9-]{8,32}$/)
+    .optional(),
 });
 
 export const refreshSchema = Joi.object({}).unknown(false);

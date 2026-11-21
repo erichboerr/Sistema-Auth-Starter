@@ -11,6 +11,7 @@ export class User extends Model {
   declare lockedUntil: Date | null;
   declare mfaEnabled: boolean;
   declare mfaSecretEncrypted: string | null;
+  declare mfaRecoveryCodesHash: string[];
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
   declare readonly deletedAt: Date | null;
@@ -45,6 +46,7 @@ export const initUserModel = (sequelize: Sequelize): typeof User => {
         defaultValue: false,
       },
       mfaSecretEncrypted: { type: DataTypes.TEXT, allowNull: true },
+      mfaRecoveryCodesHash: { type: DataTypes.JSONB, allowNull: false, defaultValue: [] },
     },
     { sequelize, tableName: "users", timestamps: true, paranoid: true },
   );
